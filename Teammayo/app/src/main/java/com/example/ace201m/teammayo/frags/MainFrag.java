@@ -2,16 +2,32 @@ package com.example.ace201m.teammayo.frags;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.ace201m.teammayo.R;
 import com.example.ace201m.teammayo.adapter.JobAdapter;
+import com.example.ace201m.teammayo.adapter.LearnAdapter;
+import com.example.ace201m.teammayo.dbhelper.DBHandler;
 import com.example.ace201m.teammayo.dbhelper.JobReq;
+import com.example.ace201m.teammayo.dbhelper.LearnReq;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -26,6 +42,9 @@ import java.util.ArrayList;
 public class MainFrag extends Fragment {
 
     private String JOB_URL = "";
+    private String USER_URL = "";
+    private String city = "";
+    ArrayList<JobReq> data=null;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -53,10 +72,85 @@ public class MainFrag extends Fragment {
         View v = inflater.inflate(R.layout.fragment_main, container, false);
 
         ListView lv = (ListView)v.findViewById(R.id.joblist);
-        ArrayList<JobReq> data = getData();
-        JobAdapter ad = new JobAdapter(getContext(), data);
-        lv.setAdapter(ad);
+        if(data==null)
+            getCity();
+        else{
+            JobAdapter ad = new JobAdapter(getContext(), data);
+            lv.setAdapter(ad);
+        }
         return v;
+    }
+
+    private void getCity(){
+        DBHandler db = new DBHandler(getContext(), null);
+        String user = db.select().get(0).getPhoneNo();
+        USER_URL += "?phoneNumber=" + user;
+        RequestQueue req = Volley.newRequestQueue(getContext());
+
+        Log.i("DEBUG", USER_URL);
+        req.add(new StringRequest(Request.Method.GET, USER_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject res = new JSONObject(response).getJSONObject("employee");
+                    getData(res.getString("city"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("DEBUG", "dont know what is wrong");
+            }
+        }));
+    }
+
+    private void getData(final String city) {
+        RequestQueue conn = Volley.newRequestQueue(getContext(),null);
+
+        JOB_URL += "?city="+ city;
+        conn.add(new StringRequest(Request.Method.GET, JOB_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    data = new ArrayList<>();
+                    JSONObject res = new JSONObject(response);
+                    JSONArray course = res.getJSONArray("course");
+                    for(int i=0;i<course.length();i++){
+                        JSONObject oneRes = course.getJSONObject(i);
+                        String bodi = oneRes.getString("body");
+                        JobReq red = new JobReq("1234567890",
+                                oneRes.getString("contractorID"),
+                                oneRes.getString("title"),
+                                oneRes.getString("skill"),
+                                city,
+                                bodi
+                        );
+                        red.setBody(bodi);
+                        // data.add(red);
+                        Log.i("DEBUG",bodi +  red.getBody());
+                    }
+                    refresh();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }));
+    }
+
+    private void refresh() {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        if (Build.VERSION.SDK_INT >= 26) {
+            ft.setReorderingAllowed(false);
+        }
+        ft.detach(this).attach(this).commit();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
