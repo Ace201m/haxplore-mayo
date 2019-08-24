@@ -7,7 +7,6 @@
     tools:context=".activity.MainActivity">
 
     <FrameLayout
-        android:layout_marginTop="?attr/actionBarSize"
         android:layout_marginBottom="?attr/actionBarSize"
         android:id="@+id/main_view"
         android:layout_width="match_parent"
