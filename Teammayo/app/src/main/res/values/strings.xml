@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Teammayo</string>
+    <string name="option1">Home</string>
+    <string name="option2">Learning</string>
+    <string name="option3">Account</string>
+
+    <string-array name="bottom_bar_menu">
+        <item name="option1">@string/option1</item>
+        <item name="option2">@string/option2</item>
+        <item name="option3">@string/option3</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
