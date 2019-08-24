@@ -52,7 +52,7 @@ public class AccFrag extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-    private String USER_URL = "";
+    private String USER_URL = "http://54.196.205.220/mayoapi/employee.php";
     private Boolean loaded = false;
     private EditText phoneNo;
     private EditText state;
@@ -118,7 +118,7 @@ public class AccFrag extends Fragment {
                     AwesomeValidation awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
 
                     awesomeValidation.addValidation(phoneNo,"^[0-9]{10}$","Enter Phone number correctly");
-                    awesomeValidation.addValidation(name,"^[a-z\\s]{1,}$","Name can't contain digits");
+                    awesomeValidation.addValidation(name,"^[a-zA-Z\\s]{1,}$","Name can't contain digits");
                     awesomeValidation.addValidation(city,"^[a-z\\s]{1,}$","City Name can't contain digits");
                     awesomeValidation.addValidation(state,"^[a-z\\s]{1,}$","State Name can't contain digits");
                     awesomeValidation.addValidation(age,"^[0-9]{1,3}$","Invalid Age");
@@ -126,16 +126,17 @@ public class AccFrag extends Fragment {
                     int skills = -1;
 
                     switch (skill.getCheckedRadioButtonId()){
-                        case R.id.skill_a:
+                        case R.id.u_skill_a:
                             skills = 0;
                             break;
-                        case R.id.skill_b:
+                        case R.id.u_skill_b:
                             skills = 1;
                             break;
-                        case R.id.skill_c:
+                        case R.id.u_skill_c:
                             skills = 2;
                             break;
                     }
+                    Log.i("DEBUG", "skill = " + skills);
                     if(awesomeValidation.validate()){
                         try {
                             final JSONObject user_data = new JSONObject(
@@ -177,7 +178,7 @@ public class AccFrag extends Fragment {
 
     private void populateData() {
         DBHandler db = new DBHandler(getContext(), null);
-        String user = db.select().get(0).getPhoneNo();
+        final String user = db.select().get(0).getPhoneNo();
         USER_URL += "?phoneNumber=" + user;
         RequestQueue req = Volley.newRequestQueue(getContext());
 
@@ -187,12 +188,13 @@ public class AccFrag extends Fragment {
             public void onResponse(String response) {
                 try {
                     JSONObject res = new JSONObject(response).getJSONObject("employee");
-                    phoneNo.setText(res.getString("phoneNumber"));
+                    phoneNo.setText(user);
                     state.setText(res.getString("state"));
                     city.setText(res.getString("city"));
                     name.setText(res.getString("name"));
-                    address.setText(res.getString("address"));
+                    address.setText(res.getString("state"));
                     String sk = res.getString("skill");
+                    age.setText(res.getString("age"));
 
                     switch (sk){
                         case "0":
@@ -216,7 +218,7 @@ public class AccFrag extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i("DEBUG", "dont know what is wrong");
+                Log.i("DEBUG", "the shit is here too");
             }
         }));
     }

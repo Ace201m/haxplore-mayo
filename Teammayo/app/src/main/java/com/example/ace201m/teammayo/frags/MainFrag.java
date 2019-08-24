@@ -16,6 +16,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ace201m.teammayo.R;
@@ -41,8 +42,8 @@ import java.util.ArrayList;
  */
 public class MainFrag extends Fragment {
 
-    private String JOB_URL = "";
-    private String USER_URL = "";
+    private String JOB_URL = "http://54.196.205.220/mayoapi/jobrequest.php";
+    private String USER_URL = "http://54.196.205.220/mayoapi/employee.php";
     private String city = "";
     ArrayList<JobReq> data=null;
 
@@ -88,12 +89,14 @@ public class MainFrag extends Fragment {
         RequestQueue req = Volley.newRequestQueue(getContext());
 
         Log.i("DEBUG", USER_URL);
+
         req.add(new StringRequest(Request.Method.GET, USER_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
+                    Log.i("DEBUG", "dfdd " + response);
                     JSONObject res = new JSONObject(response).getJSONObject("employee");
-                    getData(res.getString("city"));
+                    getData(res.getString("city"), res.getString("skill"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -102,12 +105,12 @@ public class MainFrag extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i("DEBUG", "dont know what is wrong");
+                Log.i("DEBUG", "fiding " + error.getMessage());
             }
         }));
     }
 
-    private void getData(final String city) {
+    private void getData(final String city, final String skill) {
         RequestQueue conn = Volley.newRequestQueue(getContext(),null);
 
         JOB_URL += "?city="+ city;
@@ -117,20 +120,23 @@ public class MainFrag extends Fragment {
                 try {
                     data = new ArrayList<>();
                     JSONObject res = new JSONObject(response);
-                    JSONArray course = res.getJSONArray("course");
+                    JSONArray course = res.getJSONArray("job");
                     for(int i=0;i<course.length();i++){
                         JSONObject oneRes = course.getJSONObject(i);
                         String bodi = oneRes.getString("body");
-                        JobReq red = new JobReq("1234567890",
-                                oneRes.getString("contractorID"),
+                        JobReq red = new JobReq(oneRes.getString("contractorID"),
+                                oneRes.getInt("jobID"),
                                 oneRes.getString("title"),
-                                oneRes.getString("skill"),
-                                city,
-                                bodi
+                                oneRes.getInt("numberOfPeople"),
+                                oneRes.getString("city"),
+                                oneRes.getString("address"),
+                                oneRes.getInt("status"),
+                                oneRes.getString("state"),
+                                oneRes.getString("skill")
                         );
-                        red.setBody(bodi);
-                        // data.add(red);
-                        Log.i("DEBUG",bodi +  red.getBody());
+                        if(skill.equals(red.getSkill())){
+                            data.add(red);
+                        }
                     }
                     refresh();
                 } catch (JSONException e) {
@@ -175,10 +181,6 @@ public class MainFrag extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    public ArrayList<JobReq> getData() {
-        return new ArrayList<JobReq>();
     }
 
     /**

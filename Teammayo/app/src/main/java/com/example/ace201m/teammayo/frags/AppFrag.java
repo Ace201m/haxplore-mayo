@@ -53,8 +53,9 @@ public class AppFrag extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private String APP_URL = "";
-    private String USER_URL = "";
+    // TODO
+    private String APP_URL = "http://54.196.205.220/mayoapi/jobapplication.php";
+    private String USER_URL = "http://54.196.205.220/mayoapi/employee.php";
     private ArrayList<AppReq> data = null;
 
     private OnFragmentInteractionListener mListener;

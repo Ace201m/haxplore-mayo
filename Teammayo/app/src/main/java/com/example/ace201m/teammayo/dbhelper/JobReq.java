@@ -10,8 +10,9 @@ public class JobReq {
     private String state;
     private String address;
     private int status;
+    private String skill;
 
-    public JobReq(String contPhone, int jobId, String title, int need, String city, String address, int status, String state){
+    public JobReq(String contPhone, int jobId, String title, int need, String city, String address, int status, String state, String skill){
         this.state = state;
         setContPhone(contPhone);
         setAddress(address);
@@ -21,6 +22,7 @@ public class JobReq {
         setStatus(status);
         setTitle(title);
         setState(state);
+        setSkill(skill);
     }
 
 
@@ -86,5 +88,13 @@ public class JobReq {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public String getSkill() {
+        return skill;
+    }
+
+    public void setSkill(String skill) {
+        this.skill = skill;
     }
 }
