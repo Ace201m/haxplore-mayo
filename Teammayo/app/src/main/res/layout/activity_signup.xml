@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:layout_margin="20dp"
-        android:text="Name" />
+        android:text="Password" />
     <EditText
         android:id="@+id/et4"
         android:layout_width="match_parent"
