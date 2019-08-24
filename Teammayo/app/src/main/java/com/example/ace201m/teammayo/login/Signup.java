@@ -98,6 +98,7 @@ public class Signup extends AppCompatActivity {
                                         "\",\"skill\":" + skills + "," +
                                         "\"age\":" + age.getText().toString() +
                                         ",\"city\":\"" + city.getText().toString() + "\"," +
+                                        ",\"address\":\"" + address.getText().toString() + "\"," +
                                         "\"state\":\"" + state.getText().toString() +
                                         "\"}");
                         RequestQueue req = Volley.newRequestQueue(getApplicationContext());
