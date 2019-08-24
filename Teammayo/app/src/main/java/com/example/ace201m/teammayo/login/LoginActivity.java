@@ -1,10 +1,12 @@
 package com.example.ace201m.teammayo.login;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -40,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         changeView();
 
         Button submit = (Button) findViewById(R.id.button);
+        TextView redirect_signup = (TextView) findViewById(R.id.tv2);
         phoneNo = (EditText)findViewById(R.id.et1);
         pin = (EditText)findViewById(R.id.et2);
 
@@ -79,6 +82,14 @@ public class LoginActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
+            }
+        });
+
+        redirect_signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(LoginActivity.this, Signup.class));
             }
         });
 
