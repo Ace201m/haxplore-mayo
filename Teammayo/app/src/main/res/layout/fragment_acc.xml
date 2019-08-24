@@ -6,80 +6,133 @@
     android:orientation="vertical"
     tools:context=".frags.AccFrag">
 
-    <TextView
-        android:id="@+id/update_profile"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textAlignment="center"
-        android:gravity="center"
-        android:textSize="25dp"
-        android:textColor="@android:color/black"
-        android:text="Update Profile" />
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:layout_margin="20dp"
-        android:inputType="textPersonName"
-        android:hint="Name" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <EditText
-        android:editable="false"
-        android:id="@+id/phone_num"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:layout_margin="20dp"
-        android:inputType="none"
-        android:hint="Phone No." />
+            <TextView
+                android:id="@+id/update_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:textSize="25dp"
+                android:textColor="@android:color/black"
+                android:text="Update Profile" />
 
-    <EditText
-        android:id="@+id/address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:layout_margin="20dp"
-        android:inputType="textPostalAddress"
-        android:hint="Address" />
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_margin="20dp"
+                android:inputType="textPersonName"
+                android:hint="Name" />
 
-    <EditText
-        android:id="@+id/city"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:layout_margin="20dp"
-        android:inputType="textPostalAddress"
-        android:hint="City" />
-    <EditText
-        android:id="@+id/state"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:layout_margin="20dp"
-        android:inputType="textPostalAddress"
-        android:hint="State" />
+            <EditText
+                android:editable="false"
+                android:id="@+id/phone_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_margin="20dp"
+                android:inputType="none"
+                android:hint="Phone No." />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center">
-        <Button
-            android:id="@+id/update_profile_b"
-            android:layout_gravity="center"
-            android:layout_margin="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Update" />
-        <Button
-            android:id="@+id/logout"
-            android:layout_gravity="center"
-            android:layout_margin="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Logout" />
-    </LinearLayout>
+            <EditText
+                android:id="@+id/age_u"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_margin="20dp"
+                android:inputType="number"
+                android:hint="Age" />
+
+            <EditText
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_margin="20dp"
+                android:inputType="textPostalAddress"
+                android:hint="Address" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:id="@+id/u_skill"
+                android:gravity="center">
+
+                <RadioButton
+                    android:id="@+id/u_skill_a"
+                    android:padding="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/skill1" />
+
+                <RadioButton
+                    android:id="@+id/u_skill_b"
+                    android:padding="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/skill2" />
+
+                <RadioButton
+                    android:id="@+id/u_skill_c"
+                    android:padding="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/skill3" />
+
+            </RadioGroup>
+
+            <EditText
+                android:id="@+id/city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_margin="20dp"
+                android:inputType="textPostalAddress"
+                android:hint="City" />
+            <EditText
+                android:id="@+id/state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_margin="20dp"
+                android:inputType="textPostalAddress"
+                android:hint="State" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+                <Button
+                    android:id="@+id/update_profile_b"
+                    android:layout_gravity="center"
+                    android:layout_margin="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Update" />
+                <Button
+                    android:id="@+id/logout"
+                    android:layout_gravity="center"
+                    android:layout_margin="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Logout" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

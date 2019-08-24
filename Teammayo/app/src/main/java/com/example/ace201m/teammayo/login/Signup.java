@@ -38,6 +38,7 @@ public class Signup extends AppCompatActivity {
     private RadioGroup skill;
     private EditText city;
     private EditText state;
+    private EditText age;
 
     private String USER_URL = "http://54.196.205.220/mayoapi/employee.php";
     private Boolean LOGIN = false;
@@ -58,6 +59,7 @@ public class Signup extends AppCompatActivity {
         skill = (RadioGroup) findViewById(R.id.skill);
         city = (EditText) findViewById(R.id.city_sign);
         state = (EditText)findViewById(R.id.state_sign);
+        age = (EditText)findViewById(R.id.age_a);
 
 
         submit.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +70,10 @@ public class Signup extends AppCompatActivity {
                 awesomeValidation.addValidation(phoneNo,"^[0-9]{10}$","Enter Phone number correctly");
                 awesomeValidation.addValidation(pin,"^[0-9]{4}$","Use a 4 digit number for PIN");
                 awesomeValidation.addValidation(name,"^[a-z\\s]{1,}$","Name can't contain digits");
+                awesomeValidation.addValidation(city,"^[a-z\\s]{1,}$","City Name can't contain digits");
+                awesomeValidation.addValidation(state,"^[a-z\\s]{1,}$","State Name can't contain digits");
+                awesomeValidation.addValidation(age,"^[0-9]{1,3}$","Invalid Age");
+
 
                 int skills = -1;
 
@@ -79,7 +85,7 @@ public class Signup extends AppCompatActivity {
                         skills = 1;
                         break;
                     case R.id.skill_c:
-                        skills = 1;
+                        skills = 2;
                         break;
                 }
                 if(awesomeValidation.validate()){
@@ -90,7 +96,7 @@ public class Signup extends AppCompatActivity {
                                         "\"name\":\"" + name.getText().toString() +
                                         "\",\"password\":\"" + pin.getText().toString() +
                                         "\",\"skill\":" + skills + "," +
-                                        "\"age\":" + pin.getText().toString() +
+                                        "\"age\":" + age.getText().toString() +
                                         ",\"city\":\"" + city.getText().toString() + "\"," +
                                         "\"state\":\"" + state.getText().toString() +
                                         "\"}");
