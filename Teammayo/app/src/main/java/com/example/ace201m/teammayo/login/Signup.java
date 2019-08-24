@@ -40,7 +40,7 @@ public class Signup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        
+
 
         Button submit = (Button) findViewById(R.id.button);
         TextView redirect_signup = (TextView) findViewById(R.id.tv2);
