@@ -36,6 +36,8 @@ public class JobAdapter extends ArrayAdapter<JobReq>{
         v.setText(point.getAddress());
         v = (TextView)view.findViewById(R.id.job_city);
         v.setText(point.getCity());
+        v = (TextView)view.findViewById(R.id.job_city);
+        v.setText(point.getCity());
         v = (TextView)view.findViewById(R.id.job_need);
         v.setText(point.getNeed());
         v = (TextView)view.findViewById(R.id.job_state);
@@ -44,6 +46,8 @@ public class JobAdapter extends ArrayAdapter<JobReq>{
         v.setText(point.getStatus());
         v = (TextView)view.findViewById(R.id.job_title);
         v.setText(point.getTitle());
+        v = (TextView)view.findViewById(R.id.contact_n);
+        v.setText(point.getContPhone());
 
         return view;
     }

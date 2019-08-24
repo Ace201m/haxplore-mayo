@@ -84,7 +84,11 @@ public class MainFrag extends Fragment {
     }
 
     public ArrayList<JobReq> getData() {
+<<<<<<< HEAD
         return new ArrayList<JobReq>();
+=======
+        return null;
+>>>>>>> 400caad06b2c35e6bd3c2f8d2e1e7657d83f00f3
     }
 
     /**

@@ -49,4 +49,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/job_status"
         android:text="status"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/contact_n"
+        android:text="status"/>
 </LinearLayout>
