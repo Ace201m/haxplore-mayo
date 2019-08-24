@@ -1,6 +1,8 @@
 package com.example.ace201m.teammayo.frags;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,7 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -78,6 +82,25 @@ public class MainFrag extends Fragment {
         else{
             JobAdapter ad = new JobAdapter(getContext(), data);
             lv.setAdapter(ad);
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    JobReq oneJob = data.get(position);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage("Do Really want to apply for this Job")
+                            .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    Toast.makeText(getContext(), "accept", Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .setNegativeButton("deny", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // User cancelled the dialog
+                                }
+                            });
+                    builder.show();
+                }
+            });
         }
         return v;
     }
@@ -120,7 +143,7 @@ public class MainFrag extends Fragment {
                 try {
                     data = new ArrayList<>();
                     JSONObject res = new JSONObject(response);
-                    JSONArray course = res.getJSONArray("job");
+                    JSONArray course = res.getJSONArray("jobRequest");
                     for(int i=0;i<course.length();i++){
                         JSONObject oneRes = course.getJSONObject(i);
                         String bodi = oneRes.getString("body");
