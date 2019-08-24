@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.example.ace201m.teammayo.R;
+import com.example.ace201m.teammayo.dbhelper.LearnReq;
 import com.example.ace201m.teammayo.frags.*;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,9 +34,12 @@ public class MainActivity extends AppCompatActivity {
                         openFragment(MainFrag.newInstance());
                         break;
                     case R.id.option2:
-                        openFragment(LearnFrag.newInstance());
+                        openFragment(AppFrag.newInstance());
                         break;
                     case R.id.option3:
+                        openFragment(LearnFrag.newInstance());
+                        break;
+                    case R.id.option4:
                         openFragment(AccFrag.newInstance());
                         break;
                 }

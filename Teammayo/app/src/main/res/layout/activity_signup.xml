@@ -74,21 +74,21 @@
                     android:padding="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Worker" />
+                    android:text="@string/skill1" />
 
                 <RadioButton
                     android:id="@+id/skill_b"
                     android:padding="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Manager" />
+                    android:text="@string/skill2" />
 
                 <RadioButton
                     android:id="@+id/skill_c"
                     android:padding="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Head" />
+                    android:text="@string/skill3" />
 
             </RadioGroup>
             <EditText
@@ -107,6 +107,15 @@
                 android:layout_margin="20dp"
                 android:inputType="textPostalAddress"
                 android:hint="State" />
+
+            <EditText
+                android:id="@+id/age_a"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_margin="20dp"
+                android:inputType="number"
+                android:hint="Age" />
 
             <Button
                 android:id="@+id/button"

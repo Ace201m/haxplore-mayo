@@ -2,6 +2,7 @@ package com.example.ace201m.teammayo.frags;
 
 import android.content.Context;
 import android.net.Uri;
+import android.net.sip.SipSession;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,18 +11,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ace201m.teammayo.R;
+import com.example.ace201m.teammayo.adapter.AppAdapter;
 import com.example.ace201m.teammayo.adapter.JobAdapter;
 import com.example.ace201m.teammayo.adapter.LearnAdapter;
+import com.example.ace201m.teammayo.dbhelper.AppReq;
 import com.example.ace201m.teammayo.dbhelper.DBHandler;
 import com.example.ace201m.teammayo.dbhelper.JobReq;
 import com.example.ace201m.teammayo.dbhelper.LearnReq;
@@ -35,48 +38,56 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link MainFrag.OnFragmentInteractionListener} interface
+ * {@link AppFrag.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link MainFrag#newInstance} factory method to
+ * Use the {@link AppFrag#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MainFrag extends Fragment {
-
-    private String JOB_URL = "http://54.196.205.220/mayoapi/jobrequest.php";
-    private String USER_URL = "http://54.196.205.220/mayoapi/employee.php";
-    private String city = "";
-    ArrayList<JobReq> data=null;
+public class AppFrag extends Fragment {
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
+    // TODO
+    private String APP_URL = "http://54.196.205.220/mayoapi/jobapplication.php";
+    private String USER_URL = "http://54.196.205.220/mayoapi/employee.php";
+    private ArrayList<AppReq> data = null;
+
     private OnFragmentInteractionListener mListener;
 
-    public MainFrag() {
+    public AppFrag() {
         // Required empty public constructor
     }
 
-    public static Fragment newInstance() {
-        MainFrag fragment = new MainFrag();
+    public static AppFrag newInstance() {
+        AppFrag fragment = new AppFrag();
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_main, container, false);
 
-        ListView lv = (ListView)v.findViewById(R.id.joblist);
+        View v = inflater.inflate(R.layout.fragment_app, container, false);
+        ListView lv = (ListView)v.findViewById(R.id.learnlist);
         if(data==null)
             getCity();
         else{
-            JobAdapter ad = new JobAdapter(getContext(), data);
+            AppAdapter ad = new AppAdapter(getContext(), data);
             lv.setAdapter(ad);
         }
         return v;
@@ -89,14 +100,12 @@ public class MainFrag extends Fragment {
         RequestQueue req = Volley.newRequestQueue(getContext());
 
         Log.i("DEBUG", USER_URL);
-
         req.add(new StringRequest(Request.Method.GET, USER_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.i("DEBUG", "dfdd " + response);
                     JSONObject res = new JSONObject(response).getJSONObject("employee");
-                    getData(res.getString("city"), res.getString("skill"));
+                    getData(res.getString("city"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -105,38 +114,32 @@ public class MainFrag extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i("DEBUG", "fiding " + error.getMessage());
+                Log.i("DEBUG", "dont know what is wrong");
             }
         }));
     }
 
-    private void getData(final String city, final String skill) {
+    private void getData(final String city) {
         RequestQueue conn = Volley.newRequestQueue(getContext(),null);
 
-        JOB_URL += "?city="+ city;
-        conn.add(new StringRequest(Request.Method.GET, JOB_URL, new Response.Listener<String>() {
+        APP_URL += "?city="+ city;
+        conn.add(new StringRequest(Request.Method.GET, APP_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     data = new ArrayList<>();
                     JSONObject res = new JSONObject(response);
-                    JSONArray course = res.getJSONArray("job");
+                    JSONArray course = res.getJSONArray("course");
                     for(int i=0;i<course.length();i++){
                         JSONObject oneRes = course.getJSONObject(i);
                         String bodi = oneRes.getString("body");
-                        JobReq red = new JobReq(oneRes.getString("contractorID"),
-                                oneRes.getInt("jobID"),
-                                oneRes.getString("title"),
-                                oneRes.getInt("numberOfPeople"),
-                                oneRes.getString("city"),
-                                oneRes.getString("address"),
-                                oneRes.getInt("status"),
-                                oneRes.getString("state"),
-                                oneRes.getString("skill")
+                        AppReq red = new AppReq(
+                                oneRes.getString("appId"),
+                                oneRes.getString("empId"),
+                                oneRes.getString("jobId"),
+                                oneRes.getString("status")
                         );
-                        if(skill.equals(red.getSkill())){
-                            data.add(red);
-                        }
+                        data.add(red);
                     }
                     refresh();
                 } catch (JSONException e) {
@@ -169,12 +172,6 @@ public class MainFrag extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
     }
 
     @Override
