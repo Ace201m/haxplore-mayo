@@ -58,7 +58,12 @@ public class AccFrag extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_acc, container, false);
         Button b = v.findViewById(R.id.update_profile_b);
-        EditText =
+        final EditText phoneNo = (EditText)v.findViewById(R.id.phone_num);
+        final EditText state = (EditText)v.findViewById(R.id.state);
+        final EditText city = (EditText)v.findViewById(R.id.city);
+        final EditText name = (EditText)v.findViewById(R.id.name);
+        final EditText address = (EditText)v.findViewById(R.id.address);
+
 
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,10 +71,14 @@ public class AccFrag extends Fragment {
                 AwesomeValidation awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
 
                 awesomeValidation.addValidation(phoneNo,"^[0-9]{10}$","Enter Phone number correctly");
-                awesomeValidation.addValidation(pin,"^[0-9]{4}$","Use a 4 digit number for PIN");
+                awesomeValidation.addValidation(name,"^[a-z\\s]{1,}$","Name can't contain digits");
+                awesomeValidation.addValidation(city,"^[a-z\\s]{1,}$","City Name can't contain digits");
+                awesomeValidation.addValidation(state,"^[a-z\\s]{1,}$","State Name can't contain digits");
+
 
             }
         });
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
