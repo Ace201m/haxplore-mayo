@@ -1,4 +1,4 @@
-package com.example.ace201m.teammayo.adapter;
+package com.example.ace201m.contractor.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.ace201m.teammayo.R;
-import com.example.ace201m.teammayo.dbhelper.JobReq;
+import com.example.ace201m.contractor.R;
+import com.example.ace201m.contractor.dbhelper.JobReq;
 
 import org.w3c.dom.Text;
 

@@ -1,4 +1,4 @@
-package com.example.ace201m.teammayo.activity;
+package com.example.ace201m.contractor.activity;
 
 import android.accounts.Account;
 import android.graphics.Color;
@@ -12,8 +12,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.example.ace201m.teammayo.R;
-import com.example.ace201m.teammayo.frags.*;
+import com.example.ace201m.contractor.R;
+import com.example.ace201m.contractor.frags.*;
 
 public class MainActivity extends AppCompatActivity {
 

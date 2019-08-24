@@ -1,4 +1,4 @@
-package com.example.ace201m.teammayo.frags;
+package com.example.ace201m.contractor.frags;
 
 import android.content.Context;
 import android.net.Uri;
@@ -9,9 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.example.ace201m.teammayo.R;
-import com.example.ace201m.teammayo.adapter.JobAdapter;
-import com.example.ace201m.teammayo.dbhelper.JobReq;
+import com.example.ace201m.contractor.R;
+import com.example.ace201m.contractor.adapter.JobAdapter;
+import com.example.ace201m.contractor.dbhelper.JobReq;
 
 import java.util.ArrayList;
 
@@ -56,6 +56,7 @@ public class MainFrag extends Fragment {
         ArrayList<JobReq> data = getData();
         JobAdapter ad = new JobAdapter(getContext(), data);
         lv.setAdapter(ad);
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -83,7 +84,7 @@ public class MainFrag extends Fragment {
     }
 
     public ArrayList<JobReq> getData() {
-
+        return null;
     }
 
     /**
