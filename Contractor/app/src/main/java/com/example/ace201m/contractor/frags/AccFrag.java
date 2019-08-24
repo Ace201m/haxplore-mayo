@@ -1,4 +1,4 @@
-package com.example.ace201m.teammayo.frags;
+package com.example.ace201m.contractor.frags;
 
 import android.content.Context;
 import android.net.Uri;
@@ -12,7 +12,7 @@ import android.widget.EditText;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
-import com.example.ace201m.teammayo.R;
+import com.example.ace201m.contractor.R;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,18 +58,6 @@ public class AccFrag extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_acc, container, false);
         Button b = v.findViewById(R.id.update_profile_b);
-        EditText =
-
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AwesomeValidation awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
-
-                awesomeValidation.addValidation(phoneNo,"^[0-9]{10}$","Enter Phone number correctly");
-                awesomeValidation.addValidation(pin,"^[0-9]{4}$","Use a 4 digit number for PIN");
-
-            }
-        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event

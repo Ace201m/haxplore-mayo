@@ -1,4 +1,4 @@
-package com.example.ace201m.teammayo.frags;
+package com.example.ace201m.contractor.frags;
 
 import android.content.Context;
 import android.net.Uri;
@@ -7,22 +7,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 
-import com.basgeekball.awesomevalidation.AwesomeValidation;
-import com.basgeekball.awesomevalidation.ValidationStyle;
-import com.example.ace201m.teammayo.R;
+import com.example.ace201m.contractor.R;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link AccFrag.OnFragmentInteractionListener} interface
+ * {@link LearnFrag.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link AccFrag#newInstance} factory method to
+ * Use the {@link LearnFrag#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AccFrag extends Fragment {
+public class LearnFrag extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -34,12 +30,12 @@ public class AccFrag extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public AccFrag() {
+    public LearnFrag() {
         // Required empty public constructor
     }
 
     public static android.support.v4.app.Fragment newInstance() {
-        AccFrag fragment = new AccFrag();
+        LearnFrag fragment = new LearnFrag();
         return fragment;
     }
 
@@ -56,20 +52,7 @@ public class AccFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_acc, container, false);
-        Button b = v.findViewById(R.id.update_profile_b);
-        EditText =
-
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AwesomeValidation awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
-
-                awesomeValidation.addValidation(phoneNo,"^[0-9]{10}$","Enter Phone number correctly");
-                awesomeValidation.addValidation(pin,"^[0-9]{4}$","Use a 4 digit number for PIN");
-
-            }
-        });
+        return inflater.inflate(R.layout.fragment_learn, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
