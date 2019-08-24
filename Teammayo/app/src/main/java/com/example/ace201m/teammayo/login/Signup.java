@@ -3,9 +3,12 @@ package com.example.ace201m.teammayo.login;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,6 +16,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
@@ -31,8 +35,9 @@ public class Signup extends AppCompatActivity {
     private EditText pin;
     private EditText address;
     private EditText name;
+    private RadioGroup skill;
 
-    private String USER_URL;
+    private String USER_URL = "http://54.196.205.220/mayoapi/employee.php";
     private Boolean LOGIN = false;
 
     @Override
@@ -48,6 +53,7 @@ public class Signup extends AppCompatActivity {
         pin = (EditText)findViewById(R.id.et2);
         address = (EditText)findViewById(R.id.et4);
         name = (EditText)findViewById(R.id.et3);
+        skill = (RadioGroup) findViewById(R.id.skill);
 
 
         submit.setOnClickListener(new View.OnClickListener() {
@@ -59,23 +65,54 @@ public class Signup extends AppCompatActivity {
                 awesomeValidation.addValidation(pin,"^[0-9]{4}$","Use a 4 digit number for PIN");
                 awesomeValidation.addValidation(name,"^[a-z\\s]{1,}$","Name can't contain digits");
 
+                int skills = -1;
+
+                switch (skill.getCheckedRadioButtonId()){
+                    case R.id.skill_a:
+                        skills = 0;
+                        break;
+                    case R.id.skill_b:
+                        skills = 1;
+                        break;
+                    case R.id.skill_c:
+                        skills = 1;
+                        break;
+                }
                 if(awesomeValidation.validate()){
                     try {
-                        final JSONObject user_data = new JSONObject("{\"name\":\"" + name.getText().toString() + "\"," +
-                                "\"phoneNo\":\"" + phoneNo.getText().toString()
-                                + "\",\"pin\":\"" + pin.getText().toString() + "\",\"address\":\"" + address.getText().toString() + "\"}");
+                        final JSONObject user_data = new JSONObject(
+                                "{\"action\":\"" + "1" + "\"," +
+                                "\"phoneNumber\":\"" + phoneNo.getText().toString() + "\"," +
+                                        "\"name\":\"" + name.getText().toString() +
+                                        "\",\"password\":\"" + pin.getText().toString() +
+                                        "\",\"skill\":" + skills + "," +
+                                        "\"age\":" + pin.getText().toString() +
+                                        ",\"city\":\"" + pin.getText().toString() + "\"," +
+                                        "\"state\":\"" + address.getText().toString() +
+                                        "\"}");
+
+                        Log.i("DEBUG","{\"action\":\"" + "1" + "\"," +
+                                "\"phoneNumber\":\"" + phoneNo.getText().toString() + "\"," +
+                                "\"name\":\"" + name.getText().toString() +
+                                "\",\"password\":\"" + pin.getText().toString() +
+                                "\",\"skill\":" + skills + "," +
+                                "\"age\":" + pin.getText().toString() +
+                                ",\"city\":\"" + pin.getText().toString() + "\"," +
+                                "\"state\":\"" + address.getText().toString() +
+                                "\"}" );
                         RequestQueue req = Volley.newRequestQueue(getApplicationContext());
 
-                        req.add(new StringRequest(Request.Method.POST, USER_URL, new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                startActivity(new Intent(Signup.this, LoginActivity.class));
-                            }
-                        }, new Response.ErrorListener() {
+                        req.add(new JsonObjectRequest(Request.Method.POST, USER_URL, user_data,
+                                new Response.Listener<JSONObject>() {
+                                    @Override
+                                    public void onResponse(JSONObject response) {
+                                        Toast.makeText(getApplicationContext(), "User created successfully", Toast.LENGTH_LONG).show();
+                                        finish();
+                                    }
+                                }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                Toast.makeText(getApplicationContext(), "ERROR Occured : " + error.getMessage(), Toast.LENGTH_LONG).show();
-
+                                Toast.makeText(getApplicationContext(), "User already exists", Toast.LENGTH_LONG).show();
                             }
                         }));
 

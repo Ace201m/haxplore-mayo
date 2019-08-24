@@ -1,6 +1,7 @@
 package com.example.ace201m.teammayo.frags;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,8 @@ import android.widget.EditText;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.example.ace201m.teammayo.R;
+import com.example.ace201m.teammayo.dbhelper.DBHandler;
+import com.example.ace201m.teammayo.login.LoginActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,18 +61,28 @@ public class AccFrag extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_acc, container, false);
         Button b = v.findViewById(R.id.update_profile_b);
-        EditText =
-
-        b.setOnClickListener(new View.OnClickListener() {
+//        EditText =
+//
+//        b.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AwesomeValidation awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
+//
+//                awesomeValidation.addValidation(phoneNo,"^[0-9]{10}$","Enter Phone number correctly");
+//                awesomeValidation.addValidation(pin,"^[0-9]{4}$","Use a 4 digit number for PIN");
+//
+//            }
+//        });
+        Button logout = v.findViewById(R.id.logout);
+        logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AwesomeValidation awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
-
-                awesomeValidation.addValidation(phoneNo,"^[0-9]{10}$","Enter Phone number correctly");
-                awesomeValidation.addValidation(pin,"^[0-9]{4}$","Use a 4 digit number for PIN");
-
+                DBHandler db = new DBHandler(getContext(), null);
+                db.delete();
+                startActivity(new Intent(getContext(), LoginActivity.class));
             }
         });
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

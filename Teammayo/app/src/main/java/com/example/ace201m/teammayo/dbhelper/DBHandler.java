@@ -14,7 +14,6 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "user.db";
     private static final String TABLE_NAME = "user";
-    private static final String PIN = "pin";
     private static final String PHONE_NO = "phoneNo";
 
     public DBHandler(Context context, SQLiteDatabase.CursorFactory factory) {
@@ -24,7 +23,7 @@ public class DBHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "(" + PHONE_NO +
-                " VARCHAR(20) PRIMARY KEY," + PIN + " VARCHAR(14) )";
+                " VARCHAR(20) PRIMARY KEY)";
         db.execSQL(CREATE_TABLE);
     }
 
@@ -42,17 +41,23 @@ public class DBHandler extends SQLiteOpenHelper {
 
         ArrayList<User> ret = new ArrayList<>();
         while (rs.moveToNext()){
-            ret.add(new User(rs.getString(0),rs.getString(1)));
+            ret.add(new User(rs.getString(0)));
         }
         rs.close();
         db.close();
         return ret;
     }
 
+    public void delete(){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(TABLE_NAME,null, null);
+        db.close();
+    }
+
     public void insert(User user){
         ContentValues values = new ContentValues();
         values.put(PHONE_NO,user.getPhoneNo());
-        values.put(PIN,user.getPin());
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.insert(TABLE_NAME,null,values);

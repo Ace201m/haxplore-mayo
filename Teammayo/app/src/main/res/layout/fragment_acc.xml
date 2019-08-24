@@ -62,13 +62,24 @@
         android:inputType="textPostalAddress"
         android:hint="State" />
 
-
-    <Button
-        android:id="@+id/update_profile_b"
-        android:layout_gravity="center"
-        android:layout_margin="20dp"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Update" />
+        android:gravity="center">
+        <Button
+            android:id="@+id/update_profile_b"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update" />
+        <Button
+            android:id="@+id/logout"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update" />
+    </LinearLayout>
 
 </LinearLayout>

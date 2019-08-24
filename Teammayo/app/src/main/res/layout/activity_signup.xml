@@ -33,7 +33,7 @@
         android:ems="10"
         android:layout_margin="20dp"
         android:inputType="textPersonName"
-        android:text="Phone No." />
+        android:hint="Phone No." />
 
     <EditText
         android:id="@+id/et2"
@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:layout_margin="20dp"
-        android:text="Password" />
+        android:hint="Password" />
     <EditText
         android:id="@+id/et4"
         android:layout_width="match_parent"
@@ -50,7 +50,39 @@
         android:ems="10"
         android:layout_margin="20dp"
         android:inputType="textPostalAddress"
-        android:text="Address" />
+        android:hint="Address" />
+
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:id="@+id/skill"
+        android:gravity="center">
+
+        <RadioButton
+            android:id="@+id/skill_a"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Worker" />
+
+        <RadioButton
+            android:id="@+id/skill_b"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Manager" />
+
+        <RadioButton
+            android:id="@+id/skill_c"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Head" />
+
+    </RadioGroup>
 
     <Button
         android:id="@+id/button"

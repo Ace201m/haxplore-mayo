@@ -56,6 +56,7 @@ public class MainFrag extends Fragment {
         ArrayList<JobReq> data = getData();
         JobAdapter ad = new JobAdapter(getContext(), data);
         lv.setAdapter(ad);
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -83,7 +84,7 @@ public class MainFrag extends Fragment {
     }
 
     public ArrayList<JobReq> getData() {
-
+        return new ArrayList<JobReq>();
     }
 
     /**

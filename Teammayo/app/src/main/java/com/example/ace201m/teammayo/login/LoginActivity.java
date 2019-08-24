@@ -3,6 +3,7 @@ package com.example.ace201m.teammayo.login;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ import com.android.volley.toolbox.Volley;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.example.ace201m.teammayo.R;
+import com.example.ace201m.teammayo.activity.MainActivity;
 import com.example.ace201m.teammayo.dbhelper.DBHandler;
 import com.example.ace201m.teammayo.dbhelper.User;
 
@@ -30,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText phoneNo;
     private EditText pin;
 
-    private String USER_URL;
+    private String USER_URL = "http://54.196.205.220/mayoapi/employee.php";
     private Boolean LOGIN = false;
 
     @Override
@@ -41,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         checkLogin();
         changeView();
 
-        Button submit = (Button) findViewById(R.id.button);
+        Button submit = (Button) findViewById(R.id.button_login);
         TextView redirect_signup = (TextView) findViewById(R.id.tv2);
         phoneNo = (EditText)findViewById(R.id.et1);
         pin = (EditText)findViewById(R.id.et2);
@@ -57,30 +59,26 @@ public class LoginActivity extends AppCompatActivity {
                 awesomeValidation.addValidation(pin,"^[0-9]{4}$","Use a 4 digit number for PIN");
 
                 if(awesomeValidation.validate()){
-                    try {
-                        final JSONObject user_data = new JSONObject("{\"phoneNo\":\"" + phoneNo.getText().toString()
-                                + "\",\"pin\":\"" + pin.getText().toString() + "\"}");
-                        RequestQueue req = Volley.newRequestQueue(getApplicationContext());
+                    USER_URL += "?phoneNumber=" + phoneNo.getText().toString() +
+                            "&password=" + pin.getText().toString();
+                    RequestQueue req = Volley.newRequestQueue(getApplicationContext());
 
-                        req.add(new StringRequest(Request.Method.POST, USER_URL, new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                LOGIN = true;
-                                db.insert(new User(phoneNo.getText().toString(), pin.getText().toString()));
-                                changeView();
-                            }
-                        }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Toast.makeText(getApplicationContext(), "ERROR Occured : " + error.getMessage(), Toast.LENGTH_LONG).show();
-                                LOGIN = false;
-                                changeView();
-                            }
-                        }));
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    Log.i("DEBUG", USER_URL);
+                    req.add(new StringRequest(Request.Method.GET, USER_URL, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            LOGIN = true;
+                            db.insert(new User(phoneNo.getText().toString()));
+                            changeView();
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(getApplicationContext(), "ERROR Occured : " + error.getMessage(), Toast.LENGTH_LONG).show();
+                            LOGIN = false;
+                            changeView();
+                        }
+                    }));
                 }
             }
         });
@@ -97,12 +95,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private void checkLogin() {
         DBHandler db = new DBHandler(this,null);
-        LOGIN = (db.select()!=null);
+        LOGIN = (db.select().size()!=0);
     }
 
     private void changeView() {
         if(LOGIN){
-            setContentView(R.layout.activity_main);
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
         }
         else{
             setContentView(R.layout.activity_login);
