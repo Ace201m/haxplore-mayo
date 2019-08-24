@@ -146,6 +146,7 @@ public class AccFrag extends Fragment {
                                             "\",\"skill\":" + skills + "," +
                                             "\"age\":" + age.getText().toString() +
                                             ",\"city\":\"" + city.getText().toString() + "\"," +
+                                            ",\"address\":\"" + address.getText().toString() + "\"," +
                                             "\"state\":\"" + state.getText().toString() +
                                             "\"}");
                             RequestQueue req = Volley.newRequestQueue(getContext());
@@ -192,7 +193,7 @@ public class AccFrag extends Fragment {
                     state.setText(res.getString("state"));
                     city.setText(res.getString("city"));
                     name.setText(res.getString("name"));
-                    address.setText(res.getString("state"));
+                    address.setText(res.getString("address"));
                     String sk = res.getString("skill");
                     age.setText(res.getString("age"));
 
