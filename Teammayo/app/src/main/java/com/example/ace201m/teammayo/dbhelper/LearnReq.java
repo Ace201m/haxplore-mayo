@@ -3,17 +3,17 @@ package com.example.ace201m.teammayo.dbhelper;
 public class LearnReq {
 
     private String contPhone;
-    private int learnId;
+    private String learnId;
     private String title;
     private String city;
     private String body;
 
-    public LearnReq(String contPhone, int learnId, String title, int need, String city){
+    public LearnReq(String contPhone, String learnId, String title, String city, String bod){
         setContPhone(contPhone);
         setCity(city);
         setLearnId(learnId);
         setTitle(title);
-        setBody(body);
+        this.body = bod;
     }
 
 
@@ -25,11 +25,11 @@ public class LearnReq {
         this.contPhone = contPhone;
     }
 
-    public int getLearnId() {
+    public String getLearnId() {
         return learnId;
     }
 
-    public void setLearnId(int learnId) {
+    public void setLearnId(String learnId) {
         this.learnId = learnId;
     }
 
@@ -50,7 +50,7 @@ public class LearnReq {
     }
 
     public String getBody() {
-        return body;
+        return this.body;
     }
 
     public void setBody(String city) {

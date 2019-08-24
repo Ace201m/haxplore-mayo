@@ -2,16 +2,33 @@ package com.example.ace201m.teammayo.frags;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.ace201m.teammayo.R;
 import com.example.ace201m.teammayo.adapter.LearnAdapter;
+import com.example.ace201m.teammayo.dbhelper.DBHandler;
 import com.example.ace201m.teammayo.dbhelper.LearnReq;
+import com.example.ace201m.teammayo.dbhelper.User;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -27,7 +44,10 @@ public class LearnFrag extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
-    private String LEARN_URL = "";
+    private String LEARN_URL = "http://54.196.205.220/mayoapi/course.php";
+    private String USER_URL = "http://54.196.205.220/mayoapi/employee.php";
+    private String city = "";
+    ArrayList<LearnReq> data=null;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -57,14 +77,84 @@ public class LearnFrag extends Fragment {
         // Inflate the layout for this fragment
         View v=inflater.inflate(R.layout.fragment_learn, container, false);
         ListView lv = (ListView)v.findViewById(R.id.learnlist);
-        ArrayList<LearnReq> data = getData();
-        LearnAdapter ad = new LearnAdapter(getContext(), data);
-        lv.setAdapter(ad);
+        if(data==null)
+            getCity();
+        else{
+            LearnAdapter ad = new LearnAdapter(getContext(), data);
+            lv.setAdapter(ad);
+        }
         return v;
     }
 
-    private ArrayList<LearnReq> getData() {
-        return null;
+    private void getCity(){
+        DBHandler db = new DBHandler(getContext(), null);
+        String user = db.select().get(0).getPhoneNo();
+        USER_URL += "?phoneNumber=" + user;
+        RequestQueue req = Volley.newRequestQueue(getContext());
+
+        Log.i("DEBUG", USER_URL);
+        req.add(new StringRequest(Request.Method.GET, USER_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject res = new JSONObject(response).getJSONObject("employee");
+                    getData(res.getString("city"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("DEBUG", "dont know what is wrong");
+            }
+        }));
+    }
+
+    private void getData(final String city) {
+        RequestQueue conn = Volley.newRequestQueue(getContext(),null);
+
+        LEARN_URL += "?city="+ city;
+        conn.add(new StringRequest(Request.Method.GET, LEARN_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    data = new ArrayList<>();
+                    JSONObject res = new JSONObject(response);
+                    JSONArray course = res.getJSONArray("course");
+                    for(int i=0;i<course.length();i++){
+                        JSONObject oneRes = course.getJSONObject(i);
+                        String bodi = oneRes.getString("body");
+                        LearnReq red = new LearnReq("1234567890",
+                                oneRes.getString("courseID"),
+                                oneRes.getString("title"),
+                                city,
+                                bodi
+                        );
+                        red.setBody(bodi);
+                        data.add(red);
+                        Log.i("DEBUG",bodi +  red.getBody());
+                    }
+                    refresh();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }));
+    }
+
+    private void refresh() {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        if (Build.VERSION.SDK_INT >= 26) {
+            ft.setReorderingAllowed(false);
+        }
+        ft.detach(this).attach(this).commit();
     }
 
     // TODO: Rename method, update argument and hook method into UI event

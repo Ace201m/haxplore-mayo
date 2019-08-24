@@ -36,6 +36,8 @@ public class Signup extends AppCompatActivity {
     private EditText address;
     private EditText name;
     private RadioGroup skill;
+    private EditText city;
+    private EditText state;
 
     private String USER_URL = "http://54.196.205.220/mayoapi/employee.php";
     private Boolean LOGIN = false;
@@ -54,6 +56,8 @@ public class Signup extends AppCompatActivity {
         address = (EditText)findViewById(R.id.et4);
         name = (EditText)findViewById(R.id.et3);
         skill = (RadioGroup) findViewById(R.id.skill);
+        city = (EditText) findViewById(R.id.city_sign);
+        state = (EditText)findViewById(R.id.state_sign);
 
 
         submit.setOnClickListener(new View.OnClickListener() {
@@ -87,19 +91,9 @@ public class Signup extends AppCompatActivity {
                                         "\",\"password\":\"" + pin.getText().toString() +
                                         "\",\"skill\":" + skills + "," +
                                         "\"age\":" + pin.getText().toString() +
-                                        ",\"city\":\"" + pin.getText().toString() + "\"," +
-                                        "\"state\":\"" + address.getText().toString() +
+                                        ",\"city\":\"" + city.getText().toString() + "\"," +
+                                        "\"state\":\"" + state.getText().toString() +
                                         "\"}");
-
-                        Log.i("DEBUG","{\"action\":\"" + "1" + "\"," +
-                                "\"phoneNumber\":\"" + phoneNo.getText().toString() + "\"," +
-                                "\"name\":\"" + name.getText().toString() +
-                                "\",\"password\":\"" + pin.getText().toString() +
-                                "\",\"skill\":" + skills + "," +
-                                "\"age\":" + pin.getText().toString() +
-                                ",\"city\":\"" + pin.getText().toString() + "\"," +
-                                "\"state\":\"" + address.getText().toString() +
-                                "\"}" );
                         RequestQueue req = Volley.newRequestQueue(getApplicationContext());
 
                         req.add(new JsonObjectRequest(Request.Method.POST, USER_URL, user_data,

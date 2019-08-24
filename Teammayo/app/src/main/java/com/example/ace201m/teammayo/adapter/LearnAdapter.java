@@ -3,6 +3,7 @@ package com.example.ace201m.teammayo.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +19,11 @@ import java.util.ArrayList;
 
 public class LearnAdapter extends ArrayAdapter<LearnReq>{
 
+    private ArrayList<LearnReq> d;
+
     public LearnAdapter(@NonNull Context context, ArrayList<LearnReq> data){
         super(context, 0, data);
+        d = data;
     }
 
     @NonNull
@@ -30,7 +34,8 @@ public class LearnAdapter extends ArrayAdapter<LearnReq>{
             view = LayoutInflater.from(getContext()).inflate(R.layout.list_learn_each,parent,false);
         }
 
-        LearnReq point = getItem(position);
+        LearnReq point = d.get(position);
+
 
         TextView v = (TextView)view.findViewById(R.id.contact_n);
         v.setText(point.getContPhone());
@@ -40,6 +45,7 @@ public class LearnAdapter extends ArrayAdapter<LearnReq>{
         v.setText(point.getTitle());
         v = (TextView)view.findViewById(R.id.learn_body);
         v.setText(point.getBody());
+        Log.i("DEBUGG", "dfdf" + point.getBody());
 
         return view;
     }
