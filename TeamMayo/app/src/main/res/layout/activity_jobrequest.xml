@@ -16,16 +16,8 @@
         android:gravity="center"
         android:textSize="25dp"
         android:textColor="@android:color/black"
-        android:text="Sign Up" />
+        android:text="Job Request" />
 
-    <EditText
-        android:id="@+id/et3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:layout_margin="20dp"
-        android:inputType="textPersonName"
-        android:text="Name" />
     <EditText
         android:id="@+id/et1"
         android:layout_width="match_parent"
@@ -33,33 +25,54 @@
         android:ems="10"
         android:layout_margin="20dp"
         android:inputType="textPersonName"
-        android:text="Phone No." />
+        android:text="Name" />
 
-    <EditText
-        android:id="@+id/et2"
-        android:inputType="textPassword"
+    <TextView
+        android:id="@+id/tv2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:layout_margin="20dp"
-        android:text="Name" />
+        android:layout_weight="1"
+        android:textAlignment="textStart"
+        android:textSize="20dp"
+        android:textColor="@android:color/black"
+        android:text="Job Required" />
+    <Spinner
+        android:id="@+id/planets_spinner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
     <EditText
         android:id="@+id/et4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:ems="10"
+        android:inputType="numberSigned"
+        android:text="No. of People" />
+
+    <EditText
+        android:id="@+id/et2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:ems="10"
         android:layout_margin="20dp"
-        android:inputType="textPostalAddress"
+        android:inputType="textPersonName"
         android:text="Address" />
-
+    <EditText
+        android:id="@+id/et3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_margin="20dp"
+        android:inputType="textPersonName"
+        android:text="City" />
     <Button
         android:id="@+id/button"
         android:layout_gravity="center"
         android:layout_margin="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="Signup"
-        android:text="Sign Up" />
+        android:text="Button" />
 
 
 </LinearLayout>
