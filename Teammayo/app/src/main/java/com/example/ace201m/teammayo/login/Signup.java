@@ -97,7 +97,7 @@ public class Signup extends AppCompatActivity {
                                         "\",\"password\":\"" + pin.getText().toString() +
                                         "\",\"skill\":" + skills + "," +
                                         "\"age\":" + age.getText().toString() +
-                                        ",\"city\":\"" + city.getText().toString() + "\"," +
+                                        ",\"city\":\"" + city.getText().toString() + "\"" +
                                         ",\"address\":\"" + address.getText().toString() + "\"," +
                                         "\"state\":\"" + state.getText().toString() +
                                         "\"}");

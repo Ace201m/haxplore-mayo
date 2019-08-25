@@ -12,7 +12,7 @@ public class JobReq {
     private int status;
     private String skill;
 
-    public JobReq(String contPhone, int jobId, String title, int need, String city, String address, int status, String state, String skill){
+    public JobReq(String contPhone, int jobId, String title, int need, String city, String address, int status, String skill){
         this.state = state;
         setContPhone(contPhone);
         setAddress(address);
@@ -21,7 +21,6 @@ public class JobReq {
         setNeed(need);
         setStatus(status);
         setTitle(title);
-        setState(state);
         setSkill(skill);
     }
 
