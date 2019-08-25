@@ -4,12 +4,15 @@
     <string name="option2">Application</string>
     <string name="option3">Learning</string>
     <string name="option4">Account</string>
+    <string name="option5">Service</string>
 
     <string-array name="bottom_bar_menu">
         <item name="option1">@string/option1</item>
         <item name="option2">@string/option2</item>
         <item name="option3">@string/option3</item>
         <item name="option4">@string/option4</item>
+        <item name="option4">@string/option5</item>
+
     </string-array>
 
     <string name="skill1">Worker</string>

@@ -27,4 +27,10 @@
         android:enabled="true"
         app:showAsAction="ifRoom"
         android:icon="@drawable/baseline_account_circle_black_18dp"/>
+    <item
+        android:title="@string/option5"
+        android:id="@+id/option5"
+        android:enabled="true"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/baseline_account_circle_black_18dp"/>
 </menu>

@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.option4:
                         openFragment(AccFrag.newInstance());
+                    case R.id.option5:
+                        openFragment(ServiceFrag.newInstance());
                         break;
                 }
                 return true;

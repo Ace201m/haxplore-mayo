@@ -41,7 +41,7 @@ public class ServiceFrag extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
-    private String SERVICE_URL = "http://54.196.205.220/mayoapi/course.php";
+    private String SERVICE_URL = "http://54.196.205.220/mayoapi/service.php";
     private String USER_URL = "http://54.196.205.220/mayoapi/employee.php";
     private String city = "";
     ArrayList<LearnReq> data=null;
@@ -119,9 +119,9 @@ public class ServiceFrag extends Fragment {
                 try {
                     data = new ArrayList<>();
                     JSONObject res = new JSONObject(response);
-                    JSONArray course = res.getJSONArray("course");
-                    for(int i=0;i<course.length();i++){
-                        JSONObject oneRes = course.getJSONObject(i);
+                    JSONArray service = res.getJSONArray("service");
+                    for(int i=0;i<service.length();i++){
+                        JSONObject oneRes = service.getJSONObject(i);
                         String bodi = oneRes.getString("body");
                         LearnReq red = new LearnReq("1234567890",
                                 oneRes.getString("serviceID"),
