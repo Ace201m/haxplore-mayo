@@ -85,12 +85,39 @@ public class MainFrag extends Fragment {
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    JobReq oneJob = data.get(position);
+                    final JobReq oneJob = data.get(position);
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                    DBHandler db = new DBHandler(getContext(), null);
+                    final String user = db.select().get(0).getPhoneNo();
+
                     builder.setMessage("Do Really want to apply for this Job")
                             .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    Toast.makeText(getContext(), "accept", Toast.LENGTH_SHORT).show();
+                                    try {
+                                        final JSONObject app_data = new JSONObject(
+                                                "{\"employeeID\":\"" + user + "\"," +
+                                                        "\"jobID\":" + oneJob.getJobId() + "," +
+                                                        "\"status\":0" +
+                                                        "}");
+                                        RequestQueue req = Volley.newRequestQueue(getContext());
+
+                                        req.add(new JsonObjectRequest(Request.Method.POST, USER_URL, app_data,
+                                                new Response.Listener<JSONObject>() {
+                                                    @Override
+                                                    public void onResponse(JSONObject response) {
+                                                        Toast.makeText(getContext(), "Application sent", Toast.LENGTH_LONG).show();
+                                                    }
+                                                }, new Response.ErrorListener() {
+                                            @Override
+                                            public void onErrorResponse(VolleyError error) {
+                                                Toast.makeText(getContext(), "something is wrong", Toast.LENGTH_LONG).show();
+                                            }
+                                        }));
+                                    }
+                                    catch (JSONException e){
+                                        Log.i("DEBUG", "jsonerror");
+                                    }
                                 }
                             })
                             .setNegativeButton("deny", new DialogInterface.OnClickListener() {
