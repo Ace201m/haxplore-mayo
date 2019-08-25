@@ -145,7 +145,7 @@ public class AccFrag extends Fragment {
                                             "\"name\":\"" + name.getText().toString() +
                                             "\",\"skill\":" + skills + "," +
                                             "\"age\":" + age.getText().toString() +
-                                            ",\"city\":\"" + city.getText().toString() + "\"," +
+                                            ",\"city\":\"" + city.getText().toString() + "\"" +
                                             ",\"address\":\"" + address.getText().toString() + "\"," +
                                             "\"state\":\"" + state.getText().toString() +
                                             "\"}");

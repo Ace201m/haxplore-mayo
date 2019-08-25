@@ -48,6 +48,7 @@ public class MainFrag extends Fragment {
 
     private String JOB_URL = "http://54.196.205.220/mayoapi/jobrequest.php";
     private String USER_URL = "http://54.196.205.220/mayoapi/employee.php";
+    private String APP_URL = "http://54.196.205.220/mayoapi/jobapplication.php";
     private String city = "";
     ArrayList<JobReq> data=null;
 
@@ -80,7 +81,12 @@ public class MainFrag extends Fragment {
         if(data==null)
             getCity();
         else{
+            for(int i=0;i<data.size();i++) {
+                Log.i("DEBUG", "data fetched " + data.get(i).getStatus());
+            }
             JobAdapter ad = new JobAdapter(getContext(), data);
+            DBHandler db = new DBHandler(getContext(),null);
+            final String user = db.select().get(0).getPhoneNo();
             lv.setAdapter(ad);
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -173,7 +179,6 @@ public class MainFrag extends Fragment {
                     JSONArray course = res.getJSONArray("jobRequest");
                     for(int i=0;i<course.length();i++){
                         JSONObject oneRes = course.getJSONObject(i);
-                        String bodi = oneRes.getString("body");
                         JobReq red = new JobReq(oneRes.getString("contractorID"),
                                 oneRes.getInt("jobID"),
                                 oneRes.getString("title"),
@@ -181,9 +186,9 @@ public class MainFrag extends Fragment {
                                 oneRes.getString("city"),
                                 oneRes.getString("address"),
                                 oneRes.getInt("status"),
-                                oneRes.getString("state"),
                                 oneRes.getString("skill")
                         );
+
                         if(skill.equals(red.getSkill())){
                             data.add(red);
                         }
