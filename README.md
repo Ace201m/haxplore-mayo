@@ -17,6 +17,7 @@ _Each city face the problem of Immigration. There are some common probelms they 
 Android, AWS Relational Database Service, AWS EC2.
 
 #### Screenshots/Demo Video
+[demo link](https://youtu.be/Qa-4YgFtuXg)
 
 #### Usage
 
